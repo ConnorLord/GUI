@@ -1,0 +1,44 @@
+<!--
+
+Name: Connor Lord, connor_lord@cs.uml.edu
+Computer Science Student, UMass Lowell
+Comp.4610, GUI Programming I
+File: This HTML page is used for displaying a dynamic table that the user 
+change with entered values.
+Last updated by CL: 27-oct-2017, 14:00
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/hw4.css">
+    
+  <title>
+GUI-HW4
+  </title>
+ </head>
+  <body>
+    <script src="js/hw4.js"></script>
+  <h1>
+   HW4: Creating an Interactive Dynamic Table
+  </h1>
+
+    <p>
+      <!--all the different buttons for input -->
+    Price ($): <input type="number" step="0.01" name="MSRP" id="MSRP" value="0" size="15"><input type="button" value="Put in a price." onclick="add_column()"><br />
+    Miles-per-Gallon: <input type="number" step="0.01" name="Gallon" id="Gallon" value="0" size="15"><input type="button" value="Put in the mpg." onclick="add_row()"><br /><input type="button" value="Put in both." onclick="append_table()"><br /><input type="button" value="Delete all." onclick="delete_all_cells()">
+  </p>
+  
+  <table id="myTable">
+    <tr>
+      <td>Price/Fuel<br />consumption</td>
+    </tr>
+    
+  </table>
+
+
+
+ </body>
+</html>

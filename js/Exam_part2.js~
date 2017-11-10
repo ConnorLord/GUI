@@ -1,0 +1,545 @@
+ /* 
+<!--
+Name: Connor Lord, connor_lord@cs.uml.edu
+Computer Science Student, UMass Lowell
+Comp.4610, GUI Programming I
+File: Using javascript for the first time to create functions that the HTML
+file uses to calculate the best car offer. All three offer functions are 
+completely independent of each other, so offers of different types of cars
+can be calculated, rather then just one car with different offers.
+Last updated by CL: 27-oct-2017, 14:00
+-->
+*/
+
+//first option functions
+function cost_per_mile1() {
+    
+    //initializations
+    var MSRP = parseInt(document.getElementById("MSRP1").value);
+    if (MSRP == undefined) {
+	MSRP = 0;
+    }
+
+    var Lease = parseInt(document.getElementById("Lease1").value);
+    if (Lease == undefined) {
+	Lease = 0;
+    }
+    var Months = parseInt(document.getElementById("Months1").value);
+    if (Months== undefined) {
+	Months = 0;
+    }
+
+    var Discounts = parseInt(document.getElementById("Discounts1").value);
+    if (Discounts == undefined) {
+	Discounts = 0;
+    }
+
+    var Rebates = parseInt(document.getElementById("Rebates1").value);
+    if (Rebates == undefined) {
+	Rebates = 0;
+    }
+
+    var Down = parseInt(document.getElementById("Down1").value);
+    if (Down == undefined) {
+	Down = 0;
+    }
+
+    var Interest = parseInt(document.getElementById("Interest1").value);
+    if (Interest == undefined) {
+	Interest = 0;
+    }
+
+    var Est = parseInt(document.getElementById("Est1").value);
+    if (Est == undefined) {
+	Est = 0;
+    }
+
+    var Miles = parseInt(document.getElementById("Miles1").value);
+    if (Miles == undefined) {
+	Miles = 0;
+    }
+
+    var Add = parseFloat(document.getElementById("Add1").value);
+    if (Add == undefined) {
+	Add = 0;
+    }
+    
+    //using another function to do the brunt work
+    var funk = cost_per_month1();
+    funk = funk / (15000/12);
+
+    //function to only calculate to the cent.
+    return parseFloat(Math.round(funk * 100) / 100).toFixed(2);
+}
+
+//first option functions
+function cost_per_month1() {
+
+    //initializations
+    var MSRP = parseInt(document.getElementById("MSRP1").value);
+    if (MSRP == undefined) {
+	MSRP = 0;
+    }
+
+    var Lease = parseInt(document.getElementById("Lease1").value);
+    if (Lease == undefined) {
+	Lease = 0;
+    }
+    var Months = parseInt(document.getElementById("Months1").value);
+    if (Months== undefined) {
+	Months = 0;
+    }
+
+    var Discounts = parseInt(document.getElementById("Discounts1").value);
+    if (Discounts == undefined) {
+	Discounts = 0;
+    }
+
+    var Rebates = parseInt(document.getElementById("Rebates1").value);
+    if (Rebates == undefined) {
+	Rebates = 0;
+    }
+
+    var Down = parseInt(document.getElementById("Down1").value);
+    if (Down == undefined) {
+	Down = 0;
+    }
+
+    var Interest = parseInt(document.getElementById("Interest1").value);
+    if (Interest == undefined) {
+	Interest = 0;
+    }
+
+    var Est = parseInt(document.getElementById("Est1").value);
+    if (Est == undefined) {
+	Est = 0;
+    }
+
+    var Miles = parseInt(document.getElementById("Miles1").value);
+    if (Miles == undefined) {
+	Miles = 0;
+    }
+
+    var Add = parseFloat(document.getElementById("Add1").value);
+    if (Add == undefined) {
+	Add = 0;
+    }
+
+    var price;
+    
+    if (Lease == 0) {
+	//total cost
+	var Down_Payment = MSRP * (Down * 0.01);
+	price = MSRP - Discounts;
+	price = price - Rebates;
+	price = price - Down_Payment;
+
+	//interest per year
+	var years = 0;
+	var temp = Months;
+
+	while (Months >= 12) {
+	    Months -= 12;
+	    years++;
+	}
+	
+	Months = temp;
+	
+	var accum = 0;
+	Interest = Interest * 0.01;
+			
+	while (years > 0) {
+	    
+	    accum += (Interest * price);
+	    years--;
+	}
+	//adds the accumulated interest to the price.
+	price += accum;
+
+	price = price / Months;
+    }
+    
+    //if a lease is being entered
+    else {
+	price = Lease;
+
+	var mile_cost = 0;
+	if(Est - Miles > 0) {
+	    
+	    mile_cost =  (Est - Miles) * Add;
+
+	}
+
+	mile_cost /= 12;
+
+	price += mile_cost;
+	
+    }
+
+    //function to only calculate to the cent.
+    return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+    
+    
+}
+
+//second option functions
+function cost_per_mile2() {
+    
+    //initializations
+    var MSRP = parseInt(document.getElementById("MSRP2").value);
+    if (MSRP == undefined) {
+	MSRP = 0;
+    }
+
+    var Lease = parseInt(document.getElementById("Lease2").value);
+    if (Lease == undefined) {
+	Lease = 0;
+    }
+    var Months = parseInt(document.getElementById("Months2").value);
+    if (Months== undefined) {
+	Months = 0;
+    }
+
+    var Discounts = parseInt(document.getElementById("Discounts2").value);
+    if (Discounts == undefined) {
+	Discounts = 0;
+    }
+
+    var Rebates = parseInt(document.getElementById("Rebates2").value);
+    if (Rebates == undefined) {
+	Rebates = 0;
+    }
+
+    var Down = parseInt(document.getElementById("Down2").value);
+    if (Down == undefined) {
+	Down = 0;
+    }
+
+    var Interest = parseInt(document.getElementById("Interest2").value);
+    if (Interest == undefined) {
+	Interest = 0;
+    }
+
+    var Est = parseInt(document.getElementById("Est2").value);
+    if (Est == undefined) {
+	Est = 0;
+    }
+
+    var Miles = parseInt(document.getElementById("Miles2").value);
+    if (Miles == undefined) {
+	Miles = 0;
+    }
+
+    var Add = parseFloat(document.getElementById("Add2").value);
+    if (Add == undefined) {
+	Add = 0;
+    }
+    
+    //using another function to do the brunt work
+    var funk = cost_per_month2();
+    funk = funk / (15000/12);
+
+    //function to only calculate to the cent.
+    return parseFloat(Math.round(funk * 100) / 100).toFixed(2);
+}
+
+//second option functions
+function cost_per_month2() {
+
+    //initializations
+    var MSRP = parseInt(document.getElementById("MSRP2").value);
+    if (MSRP == undefined) {
+	MSRP = 0;
+    }
+
+    var Lease = parseInt(document.getElementById("Lease2").value);
+    if (Lease == undefined) {
+	Lease = 0;
+    }
+    var Months = parseInt(document.getElementById("Months2").value);
+    if (Months== undefined) {
+	Months = 0;
+    }
+
+    var Discounts = parseInt(document.getElementById("Discounts2").value);
+    if (Discounts == undefined) {
+	Discounts = 0;
+    }
+
+    var Rebates = parseInt(document.getElementById("Rebates2").value);
+    if (Rebates == undefined) {
+	Rebates = 0;
+    }
+
+    var Down = parseInt(document.getElementById("Down2").value);
+    if (Down == undefined) {
+	Down = 0;
+    }
+
+    var Interest = parseInt(document.getElementById("Interest2").value);
+    if (Interest == undefined) {
+	Interest = 0;
+    }
+
+    var Est = parseInt(document.getElementById("Est2").value);
+    if (Est == undefined) {
+	Est = 0;
+    }
+
+    var Miles = parseInt(document.getElementById("Miles2").value);
+    if (Miles == undefined) {
+	Miles = 0;
+    }
+
+    var Add = parseFloat(document.getElementById("Add2").value);
+    if (Add == undefined) {
+	Add = 0;
+    }
+
+    var price;
+    
+    if (Lease == 0) {
+	//total cost
+	var Down_Payment = MSRP * (Down * 0.01);
+	price = MSRP - Discounts - Rebates;
+	price = price - Down_Payment;
+
+	//interest per year
+	var years = 0;
+	var temp = Months;
+	
+	while (Months >= 12) {
+	    Months -= 12;
+	    years++;
+	}
+	
+	Months = temp;
+	
+	var accum = 0;
+	Interest = Interest * 0.01;
+	
+	while (years > 0) {
+	    
+	    accum += (Interest * price);
+	    years--;
+	}
+
+	//adds the accumulated interest to the price.
+	price += accum;
+
+	price = price / Months;
+    }
+    
+    //if a lease is being entered
+    else {
+	price = Lease;
+
+	var mile_cost = 0;
+	if(Est - Miles > 0) {
+	    
+	    mile_cost =  (Est - Miles) * Add;
+
+	}
+
+	mile_cost /= 12;
+
+	price += mile_cost;
+	
+    }
+
+    //function to only calculate to the cent.
+    return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+  
+}
+
+//first option functions
+function cost_per_mile3() {
+    
+    //initializations
+    var MSRP = parseInt(document.getElementById("MSRP3").value);
+    if (MSRP == undefined) {
+	MSRP = 0;
+    }
+
+    var Lease = parseInt(document.getElementById("Lease3").value);
+    if (Lease == undefined) {
+	Lease = 0;
+    }
+    var Months = parseInt(document.getElementById("Months3").value);
+    if (Months== undefined) {
+	Months = 0;
+    }
+
+    var Discounts = parseInt(document.getElementById("Discounts3").value);
+    if (Discounts == undefined) {
+	Discounts = 0;
+    }
+
+    var Rebates = parseInt(document.getElementById("Rebates3").value);
+    if (Rebates == undefined) {
+	Rebates = 0;
+    }
+
+    var Down = parseInt(document.getElementById("Down3").value);
+    if (Down == undefined) {
+	Down = 0;
+    }
+
+    var Interest = parseInt(document.getElementById("Interest3").value);
+    if (Interest == undefined) {
+	Interest = 0;
+    }
+
+    var Est = parseInt(document.getElementById("Est3").value);
+    if (Est == undefined) {
+	Est = 0;
+    }
+
+    var Miles = parseInt(document.getElementById("Miles3").value);
+    if (Miles == undefined) {
+	Miles = 0;
+    }
+
+    var Add = parseFloat(document.getElementById("Add3").value);
+    if (Add == undefined) {
+	Add = 0;
+    }
+    
+    //using another function to do the brunt work
+    var funk = cost_per_month1();
+    funk = funk / (15000/12);
+
+    //function to only calculate to the cent.
+    return parseFloat(Math.round(funk * 100) / 100).toFixed(2);
+}
+
+//first option functions
+function cost_per_month3() {
+
+    //initializations
+    var MSRP = parseInt(document.getElementById("MSRP3").value);
+    if (MSRP == undefined) {
+	MSRP = 0;
+    }
+
+    var Lease = parseInt(document.getElementById("Lease3").value);
+    if (Lease == undefined) {
+	Lease = 0;
+    }
+    var Months = parseInt(document.getElementById("Months3").value);
+    if (Months== undefined) {
+	Months = 0;
+    }
+
+    var Discounts = parseInt(document.getElementById("Discounts3").value);
+    if (Discounts == undefined) {
+	Discounts = 0;
+    }
+
+    var Rebates = parseInt(document.getElementById("Rebates3").value);
+    if (Rebates == undefined) {
+	Rebates = 0;
+    }
+
+    var Down = parseInt(document.getElementById("Down3").value);
+    if (Down == undefined) {
+	Down = 0;
+    }
+
+    var Interest = parseInt(document.getElementById("Interest3").value);
+    if (Interest == undefined) {
+	Interest = 0;
+    }
+
+    var Est = parseInt(document.getElementById("Est3").value);
+    if (Est == undefined) {
+	Est = 0;
+    }
+
+    var Miles = parseInt(document.getElementById("Miles3").value);
+    if (Miles == undefined) {
+	Miles = 0;
+    }
+
+    var Add = parseFloat(document.getElementById("Add3").value);
+    if (Add == undefined) {
+	Add = 0;
+    }
+
+    var price;
+    
+    if (Lease == 0) {
+	//total cost
+	var Down_Payment = MSRP * (Down * 0.01);
+	price = MSRP - Discounts - Rebates;
+	price = price - Down_Payment;
+
+	//interest per year
+	var years = 0;
+	var temp = Months;
+	
+	while (Months >= 12) {
+	    Months -= 12;
+	    years++;
+	}
+	
+	Months = temp;
+	
+	var accum = 0;
+	Interest = Interest * 0.01;
+
+	while (years > 0) {
+	    
+	    accum += (Interest * price);
+	    years--;
+	}
+
+	//adds the accumulated interest to the price.
+	price += accum;
+
+	price = price / Months;
+    }
+    
+    //if a lease is being entered
+    else {
+	price = Lease;
+
+	var mile_cost = 0;
+	if(Est - Miles > 0) {
+	    
+	    mile_cost =  (Est - Miles) * Add;
+
+	}
+
+	mile_cost /= 12;
+
+	price += mile_cost;
+	
+    }
+
+    //function to only calculate to the cent.
+    return parseFloat(Math.round(price * 100) / 100).toFixed(2);
+    
+    
+}
+
+function calculate1() {
+
+    //first option
+    document.getElementById("cpmonth1").innerHTML = cost_per_month1();
+    document.getElementById("cpmile1").innerHTML = cost_per_mile1();
+}
+
+function calculate2() {
+    
+    //second option
+    document.getElementById("cpmonth2").innerHTML = cost_per_month2();
+    document.getElementById("cpmile2").innerHTML = cost_per_mile2();
+}
+
+function calculate3() {
+
+    //third option
+    document.getElementById("cpmonth3").innerHTML = cost_per_month3();
+    document.getElementById("cpmile3").innerHTML = cost_per_mile3();
+}

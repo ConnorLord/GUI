@@ -1,0 +1,59 @@
+ /* 
+<!--
+Name: Connor Lord, connor_lord@cs.uml.edu
+Computer Science Student, UMass Lowell
+Comp.4610, GUI Programming I
+File: Implement a CSS file that will style the take home portion of the Midterm
+Created: 27-oct-2017
+Last updated by CL: 27-oct-2017, 14:00
+-->
+*/
+
+
+body {
+    background-color: MediumTurquoise;
+    margin: .5cm auto 0cm auto
+}
+
+table {
+    background-color: LightSteelBlue;
+    margin: auto;
+
+    max-width: 650px;
+    
+}
+
+h1 {
+    text-align: center;
+    color: Navy;
+}
+
+p {
+    text-align: center;
+    color: Navy;
+}
+
+/*the button took the most because it didn;t match the rest */
+button {
+    background-color: SlateBlue;
+    border: 2px solid black;
+    color: black;
+    font-family: times;
+    border-radius: 5px;
+    margin-left: 40px;
+}
+
+th {
+    font-family: palatino;
+    font-size: 30px;
+}
+
+li {
+    border: solid MediumPurple;
+    border-width: 1px 2px 1px 2px;
+    margin-right: 20px;
+}
+
+td {
+    border: solid blue;
+}
