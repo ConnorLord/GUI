@@ -1,0 +1,347 @@
+<!--
+
+Name: Connor Lord, connor_lord@cs.uml.edu
+Computer Science Student, UMass Lowell
+Comp.4610, GUI Programming I
+File: This, assignment was to add error checking to a previous assignment by using JQuery.
+I was very uncertain what to do for this assignment, so I went online and had help from
+http://johnathanmarksmith.com/jquery/javascript/2013/05/24/how-to-use-jquery-validation-plugin-for-field-validatoin 
+for context. Unfortunately I still could not get the assignment to run properly.
+Last updated by CL: 19-nov-2017, 22.57
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/hw4-1.css">
+    <title>Gui-HW5</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style type="text/css">
+        #errorContainer {
+            display: none;
+            overflow: auto;
+            background-color: MediumSpringGreen;
+            border: 1px solid Red;
+            padding-top: 0;
+        }
+        #errorContainer label {
+            float: none;
+            width: auto;
+        }
+        input.error {
+            border: 1px solid Red;
+        }
+
+        #dialog label, #dialog input { display:block; }
+
+        #dialog label { margin-top: 0.5em; }
+
+        #dialog input, #dialog textarea { width: 95%; }
+
+        #tabs { margin-top: 1em; }
+
+        #tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+
+        #add_tab { cursor: pointer; }
+
+    </style>
+  </head>
+<body>
+    <script src="js/hw6.js"></script>
+
+	<h1>
+   		HW5: Creating an Interactive Dynamic Table<br /> Now with jquery, sliders, and tabs.
+  	</h1>
+
+	
+<div id="errorContainer">
+    <p>Please correct the following errors and try again:</p>
+    <ul />
+</div>
+
+<div>
+    <form id="myForm">
+      <p>
+            <label for="MSRP">Starting Price ($):</label>
+            <input id="MSRP" name="MSRP"></input> min:1, max:100000
+      </p>
+      
+      <div id="slider1"></div><br/>
+      
+      <p>
+            <label for="MSRP1">Ending Price ($):</label>
+            <input id="MSRP1" name="MSRP1"></input> min:1, max:100000
+      </p>
+
+      <div id="slider2"></div><br/>
+
+      <p>
+            <label for="Gallon">Starting MPG:</label>
+            <input id="Gallon" name="Gallon"></input> min:1, max:200
+      </p>
+
+      <div id="slider3"></div><br/>
+      
+      <p>
+            <label for="Gallon1">Ending MPG:</label>
+            <input id="Gallon1" name="Gallon1"></input> min:1, max:200
+      </p>
+
+      <div id="slider4"></div><br/>
+      
+<!--
+      <p>
+            <input type="submit" value="Enter values." onclick="append_table()"><br />
+      </p>
+-->
+    </form>
+</div>
+
+<!-- -->
+
+<div id="dialog" title="Tab data">
+  <form>
+    <fieldset class="ui-helper-reset">
+      <label for="tab_title">Title</label>
+      <input type="text" name="tab_title" id="tab_title" value="New Tab" class="ui-widget-content ui-corner-all">
+      <label for="tab_content">Content</label>
+      <textarea name="tab_content" id="tab_content" class="ui-widget-content ui-corner-all">Placeholder for Table</textarea>
+    </fieldset>
+  </form>
+</div>
+ 
+<input type="submit" value="Add Tab" id="add_tab" onclick="append_table()">
+<input type="submit" value="Remove All!" id="removeTabs">
+ 
+<div id="tabs">
+  <ul>
+  <li><a href="#tabs-1">Price/Fuel Efficiency</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
+  </ul>
+  <div id="tabs-1">
+    <div id="myTable">
+  </div>
+  </div>
+  
+</div><br />
+
+<!-- -->
+
+  <div id="myTable">
+  </div>
+
+
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"></script>
+<script type="text/javascript">
+
+<!-- The JQuery usage -->
+    $(function(){
+    	jQuery.validator.setDefaults({
+        	debug: true,
+        	success: "valid"
+    	});
+
+        $('#myForm').validate({
+            rules: {
+                MSRP: {
+		    required: true,
+		    min: 1
+		},
+                MSRP1: {
+		    required: true,
+		    min: 1
+		},
+                Gallon: {
+                    required: true,
+                    min: 1
+                },
+		Gallon1: {
+                    required: true,
+                    min: 1
+                }
+            },
+            messages: {
+                MSRP: {
+                    required: "Please enter a valid starting price.",
+                    min: "Your price must be at least 1 dollar."
+                },
+                MSRP1: {
+                    required: "Please enter a valid starting price.",
+                    min: "Your price must be at least 1 dollar."
+                },
+                Gallon: {
+                    required: "Please enter a valid MPG.",
+                    min: "Your price must be at least 1 Mile-per-Gallon."
+                },
+		Gallon1: {
+                    required: "Please enter a valid MPG.",
+                    min: "Your price must be at least 1 Mile-per-Gallon."
+                }
+            },
+            errorContainer: $('#errorContainer'),
+            errorLabelContainer: $('#errorContainer ul'),
+            wrapper: 'li'
+        });
+    });
+
+//slider functions
+  $(function () {
+  $("#slider1").slider({
+    min: 0, max: 100000, step: 100, value: 1,
+    slide: function( event, ui ) {
+      $("#MSRP").val(ui.value);
+    }
+  });
+  var initialValue = $("#slider1").slider("option", "value");
+  $("#MSRP").val(initialValue);
+  $("#MSRP").change(function() {
+    var oldVal = $("#slider1").slider("option", "value");
+    var newVal = $(this).val();
+    if (isNaN(newVal) || newVal < 1 || newVal > 100000) {
+      $("#MSRP").val(oldVal);
+    } else {
+      $("#slider1").slider("option", "value", newVal);
+    }
+  });
+});
+
+    $(function () {
+    $("#slider2").slider({
+    min: 0, max: 100000, step: 100, value: 1,
+    slide: function( event, ui ) {
+      $("#MSRP1").val(ui.value);
+    }
+  });
+  var initialValue = $("#slider2").slider("option", "value");
+  $("#MSRP1").val(initialValue);
+  $("#MSRP1").change(function() {
+    var oldVal = $("#slider2").slider("option", "value");
+    var newVal = $(this).val();
+    if (isNaN(newVal) || newVal < 1 || newVal > 100000) {
+      $("#MSRP1").val(oldVal);
+    } else {
+      $("#slider2").slider("option", "value", newVal);
+    }
+  });
+});
+
+    $(function () {
+    $("#slider3").slider({
+    min: 0, max: 200, step: 1, value: 1,
+    slide: function( event, ui ) {
+      $("#Gallon").val(ui.value);
+    }
+  });
+  var initialValue = $("#slider3").slider("option", "value");
+  $("#Gallon").val(initialValue);
+  $("#Gallon").change(function() {
+    var oldVal = $("#slider3").slider("option", "value");
+    var newVal = $(this).val();
+    if (isNaN(newVal) || newVal < 1 || newVal > 200) {
+      $("#Gallon").val(oldVal);
+    } else {
+      $("#slider3").slider("option", "value", newVal);
+    }
+  });
+});
+
+    $(function () {
+    $("#slider4").slider({
+    min: 0, max: 200, step: 1, value: 1,
+    slide: function( event, ui ) {
+      $("#Gallon1").val(ui.value);
+    }
+  });
+  var initialValue = $("#slider4").slider("option", "value");
+  $("#Gallon1").val(initialValue);
+  $("#Gallon1").change(function() {
+    var oldVal = $("#slider4").slider("option", "value");
+    var newVal = $(this).val();
+    if (isNaN(newVal) || newVal < 1 || newVal > 200) {
+      $("#Gallon1").val(oldVal);
+    } else {
+      $("#slider4").slider("option", "value", newVal);
+    }
+  });
+});
+
+/////////////////////////////////////////////////
+//helpful tab code used from https://jqueryui.com/tabs/#manipulation
+  $( function() {
+    var tabTitle = $( "#tab_title" ),
+      tabContent = $( "#tab_content" ),
+      tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
+      tabCounter = 2;
+ 
+    var tabs = $( "#tabs" ).tabs();
+ 
+    // Modal dialog init: custom buttons and a "close" callback resetting the form inside
+    var dialog = $( "#dialog" ).dialog({
+      autoOpen: false,
+      modal: true,
+      buttons: {
+        Add: function() {
+          addTab();
+          $( this ).dialog( "close" );
+        },
+        
+      },
+      close: function() {
+        form[ 0 ].reset();
+      }
+    });
+ 
+    // AddTab form: calls addTab function on submit and closes the dialog
+    var form = dialog.find( "form" ).on( "submit", function( event ) {
+      addTab();
+      dialog.dialog( "close" );
+      event.preventDefault();
+    });
+ 
+    // Actual addTab function: adds new tab using the input from the form above
+    function addTab() {
+      var label = tabTitle.val() || "Tab " + tabCounter,
+        id = "tabs-" + tabCounter,
+        li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
+        tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
+ 
+      tabs.find( ".ui-tabs-nav" ).append( li );
+      tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
+      tabs.tabs( "refresh" );
+      tabCounter++;
+    }
+ 
+    // AddTab button: just opens the dialog
+    $( "#add_tab" )
+      .button()
+      .on( "click", function() {
+        dialog.dialog( "open" );
+      });
+ 
+    // Close icon: removing the tab on click
+    tabs.on( "click", "span.ui-icon-close", function() {
+      var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+      $( "#" + panelId ).remove();
+      tabs.tabs( "refresh" );
+    });
+ 
+    tabs.on( "keyup", function( event ) {
+      if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
+        var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
+        $( "#" + panelId ).remove();
+        tabs.tabs( "refresh" );
+      }
+    });
+  } );
+
+  
+
+</script>
+</body>
+</html>
